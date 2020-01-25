@@ -25,21 +25,22 @@ public class User {
     @NotEmpty(message = "please provide Last name")
     private String lastName;
 
-    @Column(name = "birth_date")
-    private String birthDate;
+    @Column(name = "email_address")
+    @NotEmpty(message = "please provide valid Email Address")
+    private String emailAddress;
 
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<Bug> bugs = new ArrayList<>();
+    private List<Bug> bugs;
 
     public User() {
     }
@@ -68,12 +69,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getBirthDate() {
-        return birthDate;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+    public void setEmailAddress(String birthDate) {
+        this.emailAddress = birthDate;
     }
 
     public String getPassword() {
@@ -108,7 +109,7 @@ public class User {
         return Objects.equals(id, user.id) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
-                Objects.equals(birthDate, user.birthDate) &&
+                Objects.equals(emailAddress, user.emailAddress) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(roles, user.roles) &&
                 Objects.equals(bugs, user.bugs);
@@ -116,7 +117,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, birthDate, password, roles, bugs);
+        return Objects.hash(id, firstName, lastName, emailAddress, password, roles, bugs);
     }
     //https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Registration form</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" style="margin-top:20px">
+        <form class="form-horizontal" th:object="${user}" th:action="@{/doregistration}" method="post">
+            <fieldset>
+                <h1>REGISTRATION FORM</h1>
+                <div class="form-group">
+                    <input type="text" name="firstName" id="firstName" placeholder="First Name" th:field="*{firstName}" required="true" autofocus="true" class="form-control input-lg">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="lastName" id="lastName" placeholder="Last Name" th:field="*{lastName}" required="true" autofocus="true" class="form-control input-lg">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="emailAddress" id="emailAddress" placeholder="Email Address" th:field="*{emailAddress}" required="true" autofocus="true" class="form-control input-lg"
+                           pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$">
+                </div>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        Invalid username and password.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="password" id="password" placeholder="Password" th:field="*{password}" required="true" autofocus="true" class="form-control input-lg">
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<select name="userRole" id="userRole" class="form-control input-lg">-->
+                        <!--<option value="" th:value="DEVELOPER" th:text="DEVELOPER">DEVELOPER</option>-->
+                        <!--<option value="" th:value="TESTER" th:text="TESTER">TESTER</option>-->
+                    <!--</select>-->
+
+                <!--</div>-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-lg btn-primary btn-block">SUBMIT</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-lg btn-primary btn-block">CANCEL</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
