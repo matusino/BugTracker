@@ -2,10 +2,14 @@ package Bugtracker.BugTracker.model;
 
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Null;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +33,15 @@ public class User {
     @NotEmpty(message = "please provide valid Email Address")
     private String emailAddress;
 
+    @Column(name = "birth_date")
+    @Nullable
+    private Date birthDate;
+
+    @Column(name = "phone_number")
+    @Nullable
+    private String phoneNumber;
+
+
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
@@ -43,6 +56,24 @@ public class User {
     private List<Bug> bugs;
 
     public User() {
+    }
+
+    @Nullable
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(@Nullable Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    @Nullable
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(@Nullable String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {

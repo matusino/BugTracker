@@ -30,6 +30,10 @@ public class UserService {
         return userRepository.findByFirstName(firstName).orElseThrow(()->new UsernameNotFoundException("NOT FOUND"));
     }
 
+    public List<User> listOfUsers(){
+        return userRepository.findAll();
+    }
+
     public User saveUser(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Role userRole = roleRepository.findByRole("ADMIN");
