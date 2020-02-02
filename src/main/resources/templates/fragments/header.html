@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
+    <title>Bug Tracking System</title>
+
+</head>
+<body>
+<div class="jumbotron" th:fragment="header">
+    <div class="container">
+    <div class="row" style="margin-top:20px">
+        <h1 class="col-md-10">Bug Tracking System</h1>
+        <div class="col-md-2" sec:authorize="isAuthenticated()" style="margin-top:20px">
+            Logged as: <span sec:authentication="name"></span></div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link" th:href="@{/main}" href="#">HOME</a>
+                </li>
+                <li>
+                    <a class="nav-link" th:href="@{/admin/create-project}">+New Project</a>
+                </li>
+                <li>
+                    <a class="nav-link" th:href="@{/listofprojects}">Active Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">My tickets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/list-of-users}" href="#">Manage Project Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Manage Role Assignment</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">User Profile</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</div>
+</body>
+</html>

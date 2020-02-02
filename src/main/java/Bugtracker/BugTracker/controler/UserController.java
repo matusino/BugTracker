@@ -4,8 +4,10 @@ import Bugtracker.BugTracker.model.User;
 import Bugtracker.BugTracker.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,6 +26,17 @@ public class UserController {
 
         model.addAttribute("users", listOfUsers);
         return "listofusers";
+    }
+
+    @RequestMapping("/main")
+    public String renderMainPage(){
+        return "main";
+    }
+
+    @RequestMapping("/deleteUser/{userId}")
+    public String deleteUser(@PathVariable Long userId){
+        userService.deleteUser(userId);
+        return "redirect:/list-of-users";
     }
 
 }

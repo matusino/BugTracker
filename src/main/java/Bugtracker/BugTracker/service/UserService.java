@@ -25,6 +25,9 @@ public class UserService {
     public User findUserByEmail(String email){
        return userRepository.findByEmailAddress(email);
     }
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
 
     public User findUserByFirstName(String firstName){
         return userRepository.findByFirstName(firstName).orElseThrow(()->new UsernameNotFoundException("NOT FOUND"));
@@ -32,6 +35,10 @@ public class UserService {
 
     public List<User> listOfUsers(){
         return userRepository.findAll();
+    }
+
+    public User findById(Long id){
+        return userRepository.findById(id).orElse(null);
     }
 
     public User saveUser(User user){

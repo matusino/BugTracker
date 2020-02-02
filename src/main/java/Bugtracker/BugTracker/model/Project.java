@@ -16,6 +16,12 @@ public class Project {
 
     private String description;
 
+    private String status;
+//Development: The project is under development phase.
+//Release: A new patch of the project is released for testing.
+//Stable: When the project development is stable for testing.
+//Obsolete: When the project is old or not used currently.
+
     @OneToMany(mappedBy = "project")
     private List<Bug> bugs = new ArrayList<>();
 
@@ -24,6 +30,14 @@ public class Project {
 
     public Long getId() {
         return Id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setId(Long id) {

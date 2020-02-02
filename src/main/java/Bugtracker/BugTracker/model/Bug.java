@@ -17,9 +17,11 @@ public class Bug {
     @Column(name = "description")
     @NotEmpty(message = "please provide description")
     private String  description;
+    private String status;
 
     private Date creation;//tuto to automaticky nastacit do konstruktova aby setovalo date
     private Date completion;//toto nejako pozret ako to updatnut tak ked sa to zavre
+
 
     @ManyToOne
     private User user;
@@ -28,6 +30,14 @@ public class Bug {
     private Project project;
 
     public Bug() {
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Long getId() {
