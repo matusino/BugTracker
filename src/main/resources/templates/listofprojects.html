@@ -18,9 +18,9 @@
         <thead class="thead-dark">
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th style="width: 150px;">Description</th>
+                <th>Project Name</th>
+                <th>Project Status</th>
+                <th style="width: 150px;">Project Description</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -30,8 +30,8 @@
             <td th:text="${project.status}"></td>
             <td th:text="${project.description}" word-wrap: break-word></td>
             <td>
-                <a th:href="@{/registration}" class="btn btn-secondary">Modify</a>
-                <a th:href="@{/registration}" class="btn btn-secondary">Review Bugs</a>
+                <a th:href="@{/modify/project/{projectId}(projectId=${project.id})}" class="btn btn-secondary">Modify</a>
+                <a th:href="@{/list-of-project-bugs/{projectId}(projectId=${project.id})}" class="btn btn-secondary">Review Bugs</a>
                 <a th:href="@{/add-new-bug/{projectId}(projectId=${project.id})}" class="btn btn-lg btn-primary btn-block">+Add Bug</a>
             </td>
         </tr>

@@ -10,17 +10,14 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String name;
 
     private String description;
 
     private String status;
-//Development: The project is under development phase.
-//Release: A new patch of the project is released for testing.
-//Stable: When the project development is stable for testing.
-//Obsolete: When the project is old or not used currently.
+//mozno doplnit project manager, department
 
     @OneToMany(mappedBy = "project")
     private List<Bug> bugs = new ArrayList<>();
@@ -29,7 +26,7 @@ public class Project {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getStatus() {
@@ -41,7 +38,7 @@ public class Project {
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -73,7 +70,7 @@ public class Project {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
-        return Objects.equals(Id, project.Id) &&
+        return Objects.equals(id, project.id) &&
                 Objects.equals(name, project.name) &&
                 Objects.equals(description, project.description) &&
                 Objects.equals(bugs, project.bugs);
@@ -81,6 +78,6 @@ public class Project {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, name, description, bugs);
+        return Objects.hash(id, name, description, bugs);
     }
 }

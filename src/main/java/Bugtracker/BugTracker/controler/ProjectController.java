@@ -5,8 +5,7 @@ import Bugtracker.BugTracker.service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,7 +25,7 @@ public class ProjectController {
         return "addproject";
     }
 
-    @RequestMapping(value = "/admin/addproject")
+    @RequestMapping(value = "/admin/addproject", method = RequestMethod.POST)
     public String addProject(@Valid Project project, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "/admin/create-project";
@@ -41,4 +40,25 @@ public class ProjectController {
         model.addAttribute("projects", projects);
         return "listofprojects";
     }
+
+    @RequestMapping(value = "/modify/project/{projectId}")
+    public String modifyProject(@PathVariable Long projectId, Model model){
+        Project project = projectService.findById(projectId);
+        model.addAttribute("project", project);
+        return "modifyproject";
+    }
+
+    @RequestMapping(value = "/domodify/{projectId}", method = RequestMethod.POST)
+    public String doModify(@PathVariable Long projectId, @ModelAttribute Project project){
+       Project projectDB = projectService.findById(projectId);
+
+       projectDB.setName(project.getName());
+       projectDB.setStatus(project.getStatus());
+       projectDB.setDescription(project.getDescription());
+
+       projectService.createNewProject(projectDB);
+
+       return "registrationcomplete";
+    }
+//skusit dorobit databazu na komnety aby k progresu ci projeckut alebo bugu
 }

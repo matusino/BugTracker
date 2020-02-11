@@ -12,6 +12,35 @@
 <div th:replace="fragments/header :: header">
 </div>
 <div class="container">
+    <!--<h1 th:text="'Update project: ' + ${project.name}"></h1>-->
+    <form th:action="@{/domodify/{projectId}(projectId=${project.id})}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <label>Project Name</label>
+                <input type="text" name="name" id="name" th:value="${project.name}" required="true" autofocus="true"
+                       class="form-control input-lg">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select th:field="*{project.status}" name="status" id="status">
+                    <option th:value="'development'" th:text="Development">Development</option>
+                    <option th:value="'release'" th:text="Release">release</option>
+                    <option th:value="'stable'" th:text="Stable">stable</option>
+                    <option th:value="'obsolete'" th:text="Obsolete">obsolete</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Description <br>(max 250 chars)</label>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" th:text="${project.description}" name="description" id="description"
+                              cols="120" rows="3"></textarea>
+                </div>
+            </div>
+            <button>Save Changes</button>
+        </fieldset>
+    </form>
 
 </div>
 

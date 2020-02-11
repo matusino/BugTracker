@@ -65,4 +65,22 @@ public class BugController {
         return "registrationcomplete";
     }
 
+    @RequestMapping(value = "/list-of-project-bugs/{projectId}")
+    public String listOfProjectBugs(Model model, @PathVariable Long projectId){
+        List<Bug>bugs = bugService.findByProjectId(projectId);
+        Project project = projectService.findById(projectId);
+
+        model.addAttribute("project", project);
+        model.addAttribute("bugs",bugs);
+        return "listofprojectspecificbug";
+    }
+    @RequestMapping("/list-of-all-bugs")
+    public String listOfAllBugs(Model model){
+        List<Bug> bugs = bugService.findAllBugs();
+        model.addAttribute("bugs", bugs);
+        return "listofallbugs";
+    }
+
+//search bar sprav tak ze das vyhladat podla mena to bude form odkazde to na url co to spracuje, to vypluje list a potom z toho listu spravis drop down meno,
+    //daj tam aj nejaku succes hlasku aby bolo jasne ze sa en dropdown upravil
 }

@@ -2,7 +2,9 @@ package Bugtracker.BugTracker.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +24,8 @@ public class Bug {
     private Date creation;//tuto to automaticky nastacit do konstruktova aby setovalo date
     private Date completion;//toto nejako pozret ako to updatnut tak ked sa to zavre
 
+    @OneToMany(mappedBy = "bug")
+    private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne
     private User user;
@@ -30,6 +34,14 @@ public class Bug {
     private Project project;
 
     public Bug() {
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getStatus() {

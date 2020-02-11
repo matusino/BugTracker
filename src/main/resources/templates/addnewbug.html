@@ -14,7 +14,7 @@
 <div class="container">
     <form th:action="@{/dosave/{projectId}(projectId=${project.id})}" th:object="${bug}" method="post">
         <fieldset>
-            <h1 th:text="${project.name}">Add new Issue to project</h1>
+            <h1 th:text="'Add new Issue to project : ' + ${project.name}">Add new Issue to project</h1>
             <div class="form-group">
                 <label>Title</label>
                 <input type="text" name="title" id="title" th:field="*{title}"
