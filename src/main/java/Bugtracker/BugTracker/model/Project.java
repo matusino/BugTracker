@@ -17,12 +17,51 @@ public class Project {
     private String description;
 
     private String status;
-//mozno doplnit project manager, department
+
+    private String frontendLang;
+
+    private String backendLang;
+
+    private String projectManager;
+
+    private String databaseTechnology;
 
     @OneToMany(mappedBy = "project")
     private List<Bug> bugs = new ArrayList<>();
 
     public Project() {
+    }
+
+    public String getFrontendLang() {
+        return frontendLang;
+    }
+
+    public void setFrontendLang(String frontendLang) {
+        this.frontendLang = frontendLang;
+    }
+
+    public String getBackendLang() {
+        return backendLang;
+    }
+
+    public void setBackendLang(String backendLang) {
+        this.backendLang = backendLang;
+    }
+
+    public String getProjectManager() {
+        return projectManager;
+    }
+
+    public void setProjectManager(String projectManager) {
+        this.projectManager = projectManager;
+    }
+
+    public String getDatabaseTechnology() {
+        return databaseTechnology;
+    }
+
+    public void setDatabaseTechnology(String databaseTechnology) {
+        this.databaseTechnology = databaseTechnology;
     }
 
     public Long getId() {

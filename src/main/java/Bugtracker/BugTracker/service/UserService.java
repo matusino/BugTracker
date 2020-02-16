@@ -49,4 +49,13 @@ public class UserService {
         user.setRoles(listRoles);
         return userRepository.save(user);
     }
+
+    public void updateUser(User user, User userDB){
+        userDB.setFirstName(user.getFirstName());
+        userDB.setLastName(user.getLastName());
+        userDB.setPhoneNumber(user.getPhoneNumber());
+    }
+    public User saveNewUser(User user){
+        return userRepository.save(user);
+    }
 }

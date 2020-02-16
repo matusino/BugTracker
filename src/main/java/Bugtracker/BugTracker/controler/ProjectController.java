@@ -60,5 +60,4 @@ public class ProjectController {
 
        return "registrationcomplete";
     }
-//skusit dorobit databazu na komnety aby k progresu ci projeckut alebo bugu
 }

@@ -1,6 +1,6 @@
 package Bugtracker.BugTracker.model;
 
-import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -32,15 +32,18 @@ public class User {
 
     @Column(name = "birth_date")
     @Nullable
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
+
+
 
     @Column(name = "phone_number")
     @Nullable
     private String phoneNumber;
 
 
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please provide your password")
+//    @Length(min = 5, message = "*Your password must have at least 5 characters")
+//    @NotEmpty(message = "*Please provide your password")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

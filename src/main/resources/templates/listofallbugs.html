@@ -13,10 +13,11 @@
 </div>
 <div class="container">
     <h1>List of All Issues</h1>
-    <table class="table table-striped" style="margin-top: 25px">
-        <th class="thead-dark">
+    <table class="table table-striped">
+        <thead class="thead-dark">
             <tr>
                 <td>#</td>
+                <td>Project</td>
                 <td>Date of Creation</td>
                 <td>Title</td>
                 <td>Status</td>
@@ -24,10 +25,10 @@
                 <td>Assigned to</td>
                 <td>Action</td>
             </tr>
-        </th>
-        <tbody>
+        </thead>
         <tr th:each="bug : ${bugs}">
             <td th:text="${bug.id}"></td>
+            <td th:text="${bug?.project?.name}"></td>
             <td th:text="${bug.creation}"></td>
             <td th:text="${bug.title}"></td>
             <td th:text="${bug.status}"></td>
@@ -41,7 +42,6 @@
                 <a th:href="@{/addComment/{bugId}(bugId=${bug.id})}" class="btn btn-primary">EDIT</a>
             </td>
         </tr>
-        </tbody>
     </table>
 
 </div>
