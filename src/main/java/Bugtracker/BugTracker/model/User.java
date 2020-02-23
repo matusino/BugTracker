@@ -35,7 +35,8 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
 
-
+    @OneToMany(mappedBy = "projectManager")
+    private List<Project> projects;
 
     @Column(name = "phone_number")
     @Nullable
@@ -56,6 +57,14 @@ public class User {
     private List<Bug> bugs;
 
     public User() {
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     @Nullable

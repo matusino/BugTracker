@@ -22,7 +22,8 @@ public class Project {
 
     private String backendLang;
 
-    private String projectManager;
+    @ManyToOne
+    private User projectManager;
 
     private String databaseTechnology;
 
@@ -48,11 +49,11 @@ public class Project {
         this.backendLang = backendLang;
     }
 
-    public String getProjectManager() {
+    public User getProjectManager() {
         return projectManager;
     }
 
-    public void setProjectManager(String projectManager) {
+    public void setProjectManager(User projectManager) {
         this.projectManager = projectManager;
     }
 

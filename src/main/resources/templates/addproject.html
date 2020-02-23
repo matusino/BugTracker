@@ -15,10 +15,25 @@
     <form th:action="@{/admin/addproject}" th:object="${project}" method="post">
         <fieldset>
             <h1>Add Project</h1>
-            <div class="form-group">
-                <label>Project Name</label>
-                <input type="text" name="name" id="name" th:field="*{name}" required="true" autofocus="true" class="form-control input-lg">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Project Name</label>
+                        <input type="text" name="name" id="name" th:field="*{name}" required="true" autofocus="true" class="form-control input-lg">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="projectManager">Project Manager</label>
+                    <div>
+                        <select name="projectManager" id="projectManager" th:field="*{projectManager}">
+                            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName}"></option>
+                        </select>
+                    </div>
+
+                </div>
             </div>
+          
+            
             <div class="form-group">
                 <label>Status</label>
                 <select th:field="*{status}">
@@ -27,6 +42,28 @@
                     <option th:value="'stable'" th:text="Stable">stable</option>
                     <option th:value="'obsolete'" th:text="Obsolete">obsolete</option>
                 </select>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Frontend Technology</label>
+                        <input type="text" name="frontendLang" id="frontendLang" th:field="*{frontendLang}" required="true" autofocus="true" class="form-control input-lg">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Backend Technology</label>
+                        <input type="text" name="backendLang" id="backendLang" th:field="*{backendLang}" required="true" autofocus="true" class="form-control input-lg">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Database Technology</label>
+                        <input type="text" name="databaseTechnology" id="databaseTechnology" th:field="*{databaseTechnology}" required="true" autofocus="true" class="form-control input-lg">
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="form-group">

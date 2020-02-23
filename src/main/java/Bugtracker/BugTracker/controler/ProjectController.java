@@ -1,6 +1,9 @@
 package Bugtracker.BugTracker.controler;
 
+import Bugtracker.BugTracker.model.Bug;
 import Bugtracker.BugTracker.model.Project;
+import Bugtracker.BugTracker.model.User;
+import Bugtracker.BugTracker.service.BugService;
 import Bugtracker.BugTracker.service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +17,18 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final BugService bugService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, BugService bugService) {
         this.projectService = projectService;
+        this.bugService = bugService;
     }
 
     @RequestMapping(value = "/admin/create-project")
     public String createProject(Model model){
+        List<User> users = projectService.findByProjectManager();
+
+        model.addAttribute("users", users);
         model.addAttribute("project", new Project());
         return "addproject";
     }
@@ -44,8 +52,11 @@ public class ProjectController {
     @RequestMapping(value = "/modify/project/{projectId}")
     public String modifyProject(@PathVariable Long projectId, Model model){
         Project project = projectService.findById(projectId);
+        List<Bug> bugs = bugService.findByProjectId(projectId);
+
+        model.addAttribute("bugs", bugs);
         model.addAttribute("project", project);
-        return "modifyproject";
+        return "project/reviewproject";
     }
 
     @RequestMapping(value = "/domodify/{projectId}", method = RequestMethod.POST)

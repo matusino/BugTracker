@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
+    <title>Bug Tracker</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+</div>
+<div class="container">
+    <form th:action="@{/modify/project/{projectId}(projectId=${project.id})}" method="post">
+        <h1 th:text="'Review of Project: ' + ${project.name}"></h1>
+        <div class="row">
+            <label for="name" class="col-sm-2 col-form-label">Project Name:</label>
+            <div class="col-sm-3">
+                <input type="text" th:field="*{project.name}" th:value="${project.name}" id="name" readonly class="form-control-plaintext">
+            </div>
+
+            <label for="projectManager" class="col-sm-2 col-form-label">Project Manager</label>
+            <div class="col-sm-3">
+                <span th:each="projectManagers,iterStat : ${project.projectManager}">
+					<span th:text="${projectManagers.firstName}" id="projectManager"/><th:block th:if="${!iterStat.last}">,</th:block>
+				</span>
+                <!--<input type="text" th:field="*{projectManagers.firstName}" th:value="${projectManagers.firstName}" readonly class="form-control-plaintext" id="projectManager">-->
+            </div>
+        </div>
+        <div class="row">
+            <label for="frontendTechnology" class="col-sm-2 col-form-label">Frontend Technology:</label>
+            <div class="col-sm-3">
+                <input type="text" th:field="*{project.frontendLang}" th:value="${project.frontendLang}" id="frontendTechnology" readonly class="form-control-plaintext">
+            </div>
+            <label for="backendLang" class="col-sm-2 col-form-label">Backend Technology:</label>
+            <div class="col-sm-3">
+                <input type="text" th:field="*{project.backendLang}" th:value="${project.backendLang}" id="backendLang" readonly class="form-control-plaintext">
+            </div>
+        </div>
+        <div class="row">
+            <label for="databaseTechnology" class="col-sm-2 col-form-label">Database Technology:</label>
+            <div class="col-sm-3">
+                <input type="text" th:field="*{project.databaseTechnology}" th:value="${project.databaseTechnology}" id="databaseTechnology" readonly class="form-control-plaintext">
+            </div>
+        </div>
+        <div class="row">
+            <label for="status" class="col-sm-2 col-form-label">Status:</label>
+            <div class="col-sm-3">
+                <input type="text" th:field="*{project.status}" th:value="${project.status}" id="status" readonly class="form-control-plaintext">
+            </div>
+
+            <div class="form-group">
+                <label>Description <br>(max 250 chars)</label>
+            </div>
+            <div class="col-sm-4 col-form-label">
+                <textarea class="form-control" th:text="${project.description}" name="description" id="description"
+                          cols="120" rows="3" readonly></textarea>
+            </div>
+            <div class="row">
+
+            </div>
+
+        </div>
+        <div class="row">
+            <button>Modify</button>
+        </div>
+    </form>
+        <table>
+            <div class="row">
+                <h6 class="col-md-2">List of bugs</h6>
+                <a th:href="@{/add-new-bug/{projectId}(projectId=${project.id})}" class="btn btn-secondary">Add new Issue</a>
+            </div>
+
+
+            <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Date of Creation</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Assigned to</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tr th:each="bug,iterStat : ${bugs}">
+                <td th:text="${iterStat.index}"></td>
+                <td th:text="${bug.creation}"></td>
+                <td th:text="${bug.title}"></td>
+                <td th:text="${bug.status}"></td>
+                <td th:text="${bug.description}"></td>
+                <td>
+                <span th:each="users,iterStat : ${bug.user}">
+					<span th:text="${users.firstName}"/><th:block th:if="${!iterStat.last}">,</th:block>
+				</span>
+                </td>
+                <td>
+                    <a th:href="@{/addComment/{bugId}(bugId=${bug.id})}" class="btn btn-primary">EDIT</a>
+                </td>
+            </tr>
+        </table>
+
+</div>
+</body>
+</html>
