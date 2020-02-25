@@ -3,44 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/3e4f3f39b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
     <title>Bug Tracker</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header">
-</div>
-<div class="container">
-    <!--<h1 th:text="'Update project: ' + ${project.name}"></h1>-->
-    <form th:action="@{/domodify/{projectId}(projectId=${project.id})}" method="post">
-        <fieldset>
-            <div class="form-group">
-                <label>Project Name</label>
-                <input type="text" name="name" id="name" th:value="${project.name}" required="true" autofocus="true"
-                       class="form-control input-lg">
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select th:field="*{project.status}" name="status" id="status">
-                    <option th:value="'development'" th:text="Development">Development</option>
-                    <option th:value="'release'" th:text="Release">release</option>
-                    <option th:value="'stable'" th:text="Stable">stable</option>
-                    <option th:value="'obsolete'" th:text="Obsolete">obsolete</option>
-                </select>
-            </div>
-            <div class="row">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:replace="fragments/header :: header">
+            </div >
+        </div>
+    <div class="col-md-8" style="margin-top: 55px">
+        <!--<h1 th:text="'Update project: ' + ${project.name}"></h1>-->
+        <form th:action="@{/domodify/{projectId}(projectId=${project.id})}" method="post">
+            <fieldset>
                 <div class="form-group">
-                    <label>Description <br>(max 250 chars)</label>
+                    <label>Project Name</label>
+                    <input type="text" name="name" id="name" th:value="${project.name}" required="true" autofocus="true"
+                           class="form-control input-lg">
                 </div>
                 <div class="form-group">
+                    <label>Status</label>
+                    <select th:field="*{project.status}" name="status" id="status">
+                        <option th:value="'development'" th:text="Development">Development</option>
+                        <option th:value="'release'" th:text="Release">release</option>
+                        <option th:value="'stable'" th:text="Stable">stable</option>
+                        <option th:value="'obsolete'" th:text="Obsolete">obsolete</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Description <br>(max 250 chars)</label>
+                    </div>
+                    <div class="form-group">
                     <textarea class="form-control" th:text="${project.description}" name="description" id="description"
                               cols="120" rows="3"></textarea>
+                    </div>
                 </div>
-            </div>
-            <button>Save Changes</button>
-        </fieldset>
-    </form>
+                <button>Save Changes</button>
+            </fieldset>
+        </form>
+    </div>
+    </div>
 
 </div>
 

@@ -3,60 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/3e4f3f39b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
     <title>Bug Tracker</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header">
-</div>
-<div class="container">
-    <h1>Summary of :bug</h1>
-    <fieldset>
-        <table class="table table-striped" style="margin-top: 25px">
-            <thead class="thead-dark">
-            <tr>
-                <td>Date of Creation</td>
-                <td>Title</td>
-                <td>Status</td>
-                <td>Description</td>
-                <td>Assigned to</td>
-                <td>Completed</td>
-            </tr>
-            </thead>
-            <tr>
-                <td th:text="${bug.creation}"></td>
-                <td th:text="${bug.title}"></td>
-                <td th:text="${bug.status}"></td>
-                <td th:text="${bug.description}"></td>
-                <td th:text="${bug?.user?.firstName}"></td>
-                <td th:text="${bug.completion}"></td>
-            </tr>
-        </table>
-    </fieldset>
-    <div>
-        <div class="row">
-            <h6>History</h6>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:replace="fragments/header :: header">
+            </div >
         </div>
-        <div class="row" th:each="comment : ${comments}">
-            <b th:text="${comment.dateOfSubmit} + '  '"></b> &nbsp;
-            <p th:text="${comment.body}"></p>
-        </div>
-        <form th:action="@{/add-comment-to-bug/{bugId}(bugId=${bug.id})}" method="post">
-            <div class="row">
-                <label for="dropdown">Change Status: </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <select id="dropdown" th:field="*{bug.status}">
-                    <option th:value="'Unassigned'" th:text="Unassigned">Unassigned</option>
-                    <option th:value="'Assigned'" th:text="Assigned">Assigned</option>
-                    <option th:value="'In progress'" th:text="'In progress'">In progress</option>
-                    <option th:value="'Completed'" th:text="Completed">Completed</option>
-                </select>
+        <div class="col-md-8" style="margin-top: 55px">
+            <h1>Summary of :bug</h1>
+            <fieldset>
+                <table class="table table-striped" style="margin-top: 25px">
+                    <thead class="thead-dark">
+                    <tr>
+                        <td>Date of Creation</td>
+                        <td>Title</td>
+                        <td>Status</td>
+                        <td>Description</td>
+                        <td>Assigned to</td>
+                        <td>Completed</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td th:text="${bug.creation}"></td>
+                        <td th:text="${bug.title}"></td>
+                        <td th:text="${bug.status}"></td>
+                        <td th:text="${bug.description}"></td>
+                        <td th:text="${bug?.user?.firstName}"></td>
+                        <td th:text="${bug.completion}"></td>
+                    </tr>
+                </table>
+            </fieldset>
+            <div>
+                <div class="row">
+                    <h6>History</h6>
+                </div>
+                <div class="row" th:each="comment : ${comments}">
+                    <b th:text="${comment.dateOfSubmit} + '  '"></b> &nbsp;
+                    <p th:text="${comment.body}"></p>
+                </div>
+                <form th:action="@{/add-comment-to-bug/{bugId}(bugId=${bug.id})}" method="post">
+                    <div class="row">
+                        <label for="dropdown">Change Status: </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select id="dropdown" th:field="*{bug.status}">
+                            <option th:value="'Unassigned'" th:text="Unassigned">Unassigned</option>
+                            <option th:value="'Assigned'" th:text="Assigned">Assigned</option>
+                            <option th:value="'In progress'" th:text="'In progress'">In progress</option>
+                            <option th:value="'Completed'" th:text="Completed">Completed</option>
+                        </select>
+                    </div>
+                    <label>Add Comment:</label>
+                    <textarea th:field="*{comment.body}" name="comment" id="comment" cols="50" rows="3"></textarea>
+                    <button>Save</button>
+                </form>
             </div>
-            <label>Add Comment:</label>
-            <textarea th:field="*{comment.body}" name="comment" id="comment" cols="50" rows="3"></textarea>
-            <button>Save</button>
-        </form>
+        </div>
     </div>
 </div>
 </body>

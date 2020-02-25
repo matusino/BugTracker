@@ -3,45 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/3e4f3f39b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
     <title>Bug Tracker</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header">
-</div>
-<div class="container">
-    <h2>Employee details</h2>
-    <!--tu spravit navigation bar-->
-    <table class="table table-striped" style="margin-top: 25px">
-        <thead class="thead-dark">
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Date Of birth</th>
-            <th>Phone number</th>
-            <th>Email_Id</th>
-            <th>Role</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.id}">1</td>
-            <td th:text="${user.firstName} +' '+ ${user.lastName}">Matus Sykora</td>
-            <td th:text="${user.birthDate}?: '-'">26-02-1993</td>
-            <td th:text="${user.phoneNumber} ?: '-'">+421980134876</td>
-            <td th:text="${user.emailAddress}">matusino.sykora@ibm.com</td>
-            <td>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:replace="fragments/header :: header">
+            </div >
+        </div>
+        <div class="col-md-8" style="margin-top: 55px">
+            <h2>Employee details</h2>
+            <!--tu spravit navigation bar-->
+            <table class="table table-striped" style="margin-top: 25px">
+                <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Date Of birth</th>
+                    <th>Phone number</th>
+                    <th>Email_Id</th>
+                    <th>Role</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}">1</td>
+                    <td th:text="${user.firstName} +' '+ ${user.lastName}">Matus Sykora</td>
+                    <td th:text="${user.birthDate}?: '-'">26-02-1993</td>
+                    <td th:text="${user.phoneNumber} ?: '-'">+421980134876</td>
+                    <td th:text="${user.emailAddress}">matusino.sykora@ibm.com</td>
+                    <td>
 				<span th:each="role,iterStat : ${user.roles}">
 					<span th:text="${role.role}"/><th:block th:if="${!iterStat.last}">,</th:block>
 				</span>
-            </td>
-            <td>
-                <a th:href="@{/deleteUser/{userId}(userId=${user.id})}" class="button">Remove</a>
-            </td>
-        </tr>
-    </table>
+                    </td>
+                    <td>
+                        <a th:href="@{/deleteUser/{userId}(userId=${user.id})}" class="button">Remove</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

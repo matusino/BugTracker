@@ -53,4 +53,9 @@ public class AuthenticationController {
         userService.saveUser(user);
         return "registrationcomplete";
     }
+
+    @RequestMapping(value = "/test")
+    public String test(){
+        return "fragments/header2";
+    }
 }

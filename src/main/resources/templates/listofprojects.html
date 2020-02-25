@@ -4,38 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/3e4f3f39b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
     <title>List of projects</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header">
-</div>
 
-<div class="container">
-    <table class="table table-striped" style="width:100%; table-layout:fixed">
-        <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>Project Name</th>
-                <th>Project Status</th>
-                <th>Project Description</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tr th:each="project : ${projects}">
-            <td th:text="${project.id}"></td>
-            <td th:text="${project.name}"></td>
-            <td th:text="${project.status}"></td>
-            <td style="margin:0; overflow-x:scroll;overflow-y:visible;" th:text="${project.description}"></td>
-            <td>
-                <a th:href="@{/modify/project/{projectId}(projectId=${project.id})}" class="btn btn-secondary">Review</a>
-            </td>
-        </tr>
 
-    </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:replace="fragments/header :: header">
+            </div >
+        </div>
+        <div class="col-md-8" style="margin-top: 55px">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Project Name</th>
+                    <th>Project Status</th>
+                    <th>Project Description</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tr th:each="project : ${projects}">
+                    <td th:text="${project.id}"></td>
+                    <td th:text="${project.name}"></td>
+                    <td th:text="${project.status}"></td>
+                    <td style="overflow-y:auto; max-width: 100px; max-height: 10px;" th:text="${project.description}"></td>
+                    <td>
+                        <a th:href="@{/modify/project/{projectId}(projectId=${project.id})}" class="btn btn-secondary">Review</a>
+                    </td>
+                </tr>
 
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

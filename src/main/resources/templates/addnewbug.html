@@ -3,44 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/3e4f3f39b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
     <title>Bug Tracker</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header">
-</div>
-<div class="container">
-    <form th:action="@{/dosave/{projectId}(projectId=${project.id})}" th:object="${bug}" method="post">
-        <fieldset>
-            <h1 th:text="'Add new Issue to project : ' + ${project.name}">Add new Issue to project</h1>
-            <div class="form-group">
-                <label>Title</label>
-                <input type="text" name="title" id="title" th:field="*{title}"
-                       required="true" autofocus="true" class="form-control input-lg">
-            </div>
-            <div class="form-group">
-                <lable>Short summary</lable>
-                <input type="text" name="description" id="description" th:field="*{description}"
-                       required="true" autofocus="true" class="form-control input-lg">
-            </div>
-            <div class="form-group">
-                <select th:field="*{status}">
-                <option th:value="'Unassigned'" th:text="Unassigned">Unassigned</option>
-                <option th:value="'Assigned'" th:text="Assigned">Assigned</option>
-                <option th:value="'Inprogress'" th:text="'In progress'">In progress</option>
-                <option th:value="'Completed'" th:text="Completed">Completed</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <select th:field="*{user}">
-                    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName}">Unassigned</option>
-                </select>
-            </div>
-            <button>SUBMIT</button>
-        </fieldset>
-    </form>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:replace="fragments/header :: header">
+            </div >
+        </div>
+    <div class="col-md-8" style="margin-top: 55px">
+        <form th:action="@{/dosave/{projectId}(projectId=${project.id})}" th:object="${bug}" method="post">
+            <fieldset>
+                <h1 th:text="'Add new Issue to project : ' + ${project.name}">Add new Issue to project</h1>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" name="title" id="title" th:field="*{title}"
+                           required="true" autofocus="true" class="form-control input-lg">
+                </div>
+                <div class="form-group">
+                    <lable>Short summary</lable>
+                    <input type="text" name="description" id="description" th:field="*{description}"
+                           required="true" autofocus="true" class="form-control input-lg">
+                </div>
+                <div class="form-group">
+                    <select th:field="*{status}">
+                        <option th:value="'Unassigned'" th:text="Unassigned">Unassigned</option>
+                        <option th:value="'Assigned'" th:text="Assigned">Assigned</option>
+                        <option th:value="'Inprogress'" th:text="'In progress'">In progress</option>
+                        <option th:value="'Completed'" th:text="Completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select th:field="*{user}">
+                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName}">Unassigned</option>
+                    </select>
+                </div>
+                <button>SUBMIT</button>
+            </fieldset>
+        </form>
+    </div>
+    </div>
 </div>
 </body>
 </html>

@@ -3,79 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/3e4f3f39b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
     <title>Bug Tracker</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header">
-</div>
-<div class="container">
-    <form th:action="@{/admin/addproject}" th:object="${project}" method="post">
-        <fieldset>
-            <h1>Add Project</h1>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Project Name</label>
-                        <input type="text" name="name" id="name" th:field="*{name}" required="true" autofocus="true" class="form-control input-lg">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="projectManager">Project Manager</label>
-                    <div>
-                        <select name="projectManager" id="projectManager" th:field="*{projectManager}">
-                            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName}"></option>
-                        </select>
-                    </div>
 
-                </div>
-            </div>
-          
-            
-            <div class="form-group">
-                <label>Status</label>
-                <select th:field="*{status}">
-                    <option th:value="'development'" th:text="Development">Development</option>
-                    <option th:value="'release'" th:text="Release">release</option>
-                    <option th:value="'stable'" th:text="Stable">stable</option>
-                    <option th:value="'obsolete'" th:text="Obsolete">obsolete</option>
-                </select>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Frontend Technology</label>
-                        <input type="text" name="frontendLang" id="frontendLang" th:field="*{frontendLang}" required="true" autofocus="true" class="form-control input-lg">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:replace="fragments/header :: header">
+            </div >
+        </div>
+        <div class="col-md-8" style="margin-top: 55px">
+        <form th:action="@{/admin/addproject}" th:object="${project}" method="post">
+            <fieldset>
+                <h1>Add Project</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Project Name</label>
+                            <input type="text" name="name" id="name" th:field="*{name}" required="true" autofocus="true" class="form-control input-lg">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="projectManager">Project Manager</label>
+                        <div>
+                            <select name="projectManager" id="projectManager" th:field="*{projectManager}">
+                                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName}"></option>
+                            </select>
+                        </div>
+
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Backend Technology</label>
-                        <input type="text" name="backendLang" id="backendLang" th:field="*{backendLang}" required="true" autofocus="true" class="form-control input-lg">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Database Technology</label>
-                        <input type="text" name="databaseTechnology" id="databaseTechnology" th:field="*{databaseTechnology}" required="true" autofocus="true" class="form-control input-lg">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
+
+
                 <div class="form-group">
-                    <label>Description <br>(max 250 chars)</label>
+                    <label>Status</label>
+                    <select th:field="*{status}">
+                        <option th:value="'development'" th:text="Development">Development</option>
+                        <option th:value="'release'" th:text="Release">release</option>
+                        <option th:value="'stable'" th:text="Stable">stable</option>
+                        <option th:value="'obsolete'" th:text="Obsolete">obsolete</option>
+                    </select>
                 </div>
-                <div class="form-group">
-                    <textarea  class="form-control" th:field="*{description}" name="description" id="description" cols="120" rows="3"></textarea>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Frontend Technology</label>
+                            <input type="text" name="frontendLang" id="frontendLang" th:field="*{frontendLang}" required="true" autofocus="true" class="form-control input-lg">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Backend Technology</label>
+                            <input type="text" name="backendLang" id="backendLang" th:field="*{backendLang}" required="true" autofocus="true" class="form-control input-lg">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <button>Add Project</button>
-        </fieldset>
-    </form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Database Technology</label>
+                            <input type="text" name="databaseTechnology" id="databaseTechnology" th:field="*{databaseTechnology}" required="true" autofocus="true" class="form-control input-lg">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Description <br>(max 250 chars)</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea  class="form-control" th:field="*{description}" name="description" id="description" cols="120" rows="3"></textarea>
+                    </div>
+                </div>
+                <button>Add Project</button>
+            </fieldset>
+        </form>
+    </div>
+    </div>
 
 </div>
 
