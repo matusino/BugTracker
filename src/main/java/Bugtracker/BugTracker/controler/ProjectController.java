@@ -5,6 +5,7 @@ import Bugtracker.BugTracker.model.Project;
 import Bugtracker.BugTracker.model.User;
 import Bugtracker.BugTracker.service.BugService;
 import Bugtracker.BugTracker.service.ProjectService;
+import Bugtracker.BugTracker.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,10 +19,12 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final BugService bugService;
+    private final UserService userService;
 
-    public ProjectController(ProjectService projectService, BugService bugService) {
+    public ProjectController(ProjectService projectService, BugService bugService, UserService userService) {
         this.projectService = projectService;
         this.bugService = bugService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/admin/create-project")
@@ -53,7 +56,9 @@ public class ProjectController {
     public String modifyProject(@PathVariable Long projectId, Model model){
         Project project = projectService.findById(projectId);
         List<Bug> bugs = bugService.findByProjectId(projectId);
+        List<User> users = userService.findByProjectId(projectId);
 
+        model.addAttribute("users", users);
         model.addAttribute("bugs", bugs);
         model.addAttribute("project", project);
         return "project/reviewproject";

@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://kit.fontawesome.com/3e4f3f39b8.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen">
     <title>Bug Tracker</title>
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
@@ -19,19 +28,20 @@
         </div>
         <div class="col-md-8" style="margin-top: 55px">
             <h1>List of All Issues</h1>
-            <table class="table table-striped">
-                <thead class="thead-dark">
+            <table id="myTable" class="display" cellspacing="0" width="100%">
+                <thead>
                 <tr>
-                    <td>#</td>
-                    <td>Project</td>
-                    <td>Date of Creation</td>
-                    <td>Title</td>
-                    <td>Status</td>
-                    <td>Description</td>
-                    <td>Assigned to</td>
-                    <td>Action</td>
+                    <th>#</th>
+                    <th>Project</th>
+                    <th>Date of Creation</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Assigned to</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
+                <tbody>
                 <tr th:each="bug : ${bugs}">
                     <td th:text="${bug.id}"></td>
                     <td th:text="${bug?.project?.name}"></td>
@@ -48,9 +58,15 @@
                         <a th:href="@{/addComment/{bugId}(bugId=${bug.id})}" class="btn btn-primary">EDIT</a>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
+<script>
+     $(document).ready(function(){
+        $('#myTable').DataTable();
+    });
+</script>
 </body>
 </html>

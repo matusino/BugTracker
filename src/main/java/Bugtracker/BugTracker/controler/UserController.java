@@ -1,7 +1,10 @@
 package Bugtracker.BugTracker.controler;
 
+import Bugtracker.BugTracker.model.Project;
 import Bugtracker.BugTracker.model.User;
+import Bugtracker.BugTracker.service.ProjectService;
 import Bugtracker.BugTracker.service.UserService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,17 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
+    private final ProjectService projectService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ProjectService projectService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
+        this.projectService = projectService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @RequestMapping(value = "/list-of-users")
@@ -47,6 +53,7 @@ public class UserController {
     @RequestMapping(value = "/{userFirstName}/edit")
     public String userProfile(Model model, @PathVariable String userFirstName){
         User user = userService.findUserByFirstName(userFirstName);
+
         model.addAttribute("user", user);
 
         return "userprofile";
@@ -59,12 +66,36 @@ public class UserController {
             for (ObjectError error : errors) {
                 System.out.println("This is the error: " + error);
             }
-            return "error";
+            return "userprofile";
+        }
+        User userDB = userService.findUserByFirstName(userFirstName);
+
+        String existingPassword = user.getPassword();
+        String newPassword = user.getNewPassword();
+        String dbPassword = userDB.getPassword();
+
+        if(bCryptPasswordEncoder.matches(existingPassword, dbPassword)){
+            userDB.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        }else {
+            return "userprofile";
         }
 
-        User userDB = userService.findUserByFirstName(userFirstName);
         userService.updateUser(user, userDB);
         userDB.setBirthDate(user.getBirthDate());
+        userService.saveNewUser(userDB);
+
+        return "registrationcomplete";
+    }
+
+    @RequestMapping(value = "/{userFirstName}/assign/{projectId}")
+    public String assignProject(@PathVariable String userFirstName, @PathVariable Long projectId){
+       User userDB = userService.findUserByFirstName(userFirstName);
+       Project projectDB = projectService.findById(projectId);
+       List<Project> listOfProjects = new ArrayList<>();
+       listOfProjects.add(projectDB);
+
+       userDB.setProjectList(listOfProjects);
+
         userService.saveNewUser(userDB);
 
         return "registrationcomplete";

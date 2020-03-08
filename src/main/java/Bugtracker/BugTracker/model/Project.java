@@ -27,10 +27,21 @@ public class Project {
 
     private String databaseTechnology;
 
+    @ManyToMany(mappedBy = "projectList")
+    private List<User> users = new ArrayList<>();
+
     @OneToMany(mappedBy = "project")
     private List<Bug> bugs = new ArrayList<>();
 
     public Project() {
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public String getFrontendLang() {

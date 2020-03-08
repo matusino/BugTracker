@@ -1,5 +1,6 @@
 package Bugtracker.BugTracker.model;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
@@ -38,14 +39,23 @@ public class User {
     @OneToMany(mappedBy = "projectManager")
     private List<Project> projects;
 
+    @ManyToMany
+    @JoinTable(name = "user_project",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private List<Project> projectList = new ArrayList<>();
+
     @Column(name = "phone_number")
     @Nullable
     private String phoneNumber;
 
 
-//    @Length(min = 5, message = "*Your password must have at least 5 characters")
-//    @NotEmpty(message = "*Please provide your password")
+    @Length(min = 5, message = "*Your password must have at least 5 characters")
+    @NotEmpty(message = "*Please provide your password")
     private String password;
+
+    @Transient
+    private String newPassword;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -57,6 +67,22 @@ public class User {
     private List<Bug> bugs;
 
     public User() {
+    }
+
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
     }
 
     public List<Project> getProjects() {

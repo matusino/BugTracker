@@ -36,7 +36,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/registration").permitAll()
-                    .and().formLogin().defaultSuccessUrl("/list-of-users", true)
+                    .and().formLogin().defaultSuccessUrl("/main", true)
                 .loginPage("/login")
                     .permitAll()
                     .and()
