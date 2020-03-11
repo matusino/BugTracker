@@ -14,10 +14,20 @@
     <div class="row">
         <div class="col-md-2">
             <div th:replace="fragments/header :: header">
-            </div >
+            </div>
         </div>
         <div class="col-md-8" style="margin-top: 55px">
             <h1>Summary of :bug</h1>
+            <div class="row">
+                <div class="col-md-2">
+                    <a th:href="@{/{userFirstName}/assignBug/{bugId} (userFirstName= ${#authentication.name},bugId=${bug.id})}"
+                       class="btn btn-secondary">Assign To Me</a>
+                </div>
+                <div class="col-md-2">
+                    <a th:href="@{/markAsComplete/{bugId} (bugId=${bug.id})}" class="btn btn-secondary">Mark As
+                        Complete</a>
+                </div>
+            </div>
             <fieldset>
                 <table class="table table-striped" style="margin-top: 25px">
                     <thead class="thead-dark">
@@ -48,18 +58,18 @@
                     <b th:text="${comment.dateOfSubmit} + '  '"></b> &nbsp;
                     <p th:text="${comment.body}"></p>
                 </div>
-                <form th:action="@{/add-comment-to-bug/{bugId}(bugId=${bug.id})}" method="post">
+                <form th:action="@{/add-comment-to-bug/{bugId}(bugId=${bug.id})}" th:object="${comment}"  method="post">
                     <div class="row">
-                        <label for="dropdown">Change Status: </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <select id="dropdown" th:field="*{bug.status}">
-                            <option th:value="'Unassigned'" th:text="Unassigned">Unassigned</option>
-                            <option th:value="'Assigned'" th:text="Assigned">Assigned</option>
-                            <option th:value="'In progress'" th:text="'In progress'">In progress</option>
-                            <option th:value="'Completed'" th:text="Completed">Completed</option>
-                        </select>
+                        <!--<label for="dropdown">Change Status: </label>&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--<select id="dropdown" th:field="*{bug.status}">-->
+                        <!--<option th:value="'Unassigned'" th:text="Unassigned">Unassigned</option>-->
+                        <!--<option th:value="'Assigned'" th:text="Assigned">Assigned</option>-->
+                        <!--<option th:value="'In progress'" th:text="'In progress'">In progress</option>-->
+                        <!--<option th:value="'Completed'" th:text="Completed">Completed</option>-->
+                        <!--</select>-->
                     </div>
                     <label>Add Comment:</label>
-                    <textarea th:field="*{comment.body}" name="comment" id="comment" cols="50" rows="3"></textarea>
+                    <textarea th:field="*{body}" name="comment" id="comment" cols="50" rows="3"></textarea>
                     <button>Save</button>
                 </form>
             </div>

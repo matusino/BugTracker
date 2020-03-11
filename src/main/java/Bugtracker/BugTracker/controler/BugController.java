@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,20 +52,32 @@ public class BugController {
             }
             return "error";
         }
-        User user = userService.findById(bug.getUser().getId());
-        if(user == null){
-            System.out.println("USER is NULL");
-        }
+//        User user = userService.findById(bug.getUser().getId());
+//        if(user == null){
+//            System.out.println("USER is NULL");
+//        }
         Project project = projectService.findById(projectId);
         if(project == null){
             System.out.println("PROJECT is NULL");
         }
+        bug.setStatus("UNASSIGNED");
         bug.setProject(project);
-        bug.setUser(user);
+//        bug.setUser(user);
         bugService.saveBug(bug);
         return "registrationcomplete";
     }
+    @RequestMapping(value = "/{userFirstName}/assignBug/{bugId}")
+    public String assignBug (@PathVariable String userFirstName, @PathVariable Long bugId){
+        User userDB = userService.findUserByFirstName(userFirstName);
+        Bug bugDB = bugService.findByBugId(bugId);
 
+        bugDB.setUser(userDB);
+        bugDB.setStatus("In Progress");
+
+        bugService.assignBug(bugDB);
+
+        return "registrationcomplete";
+    }
     @RequestMapping(value = "/list-of-project-bugs/{projectId}")
     public String listOfProjectBugs(Model model, @PathVariable Long projectId){
         List<Bug>bugs = bugService.findByProjectId(projectId);
@@ -81,6 +94,13 @@ public class BugController {
         return "listofallbugs";
     }
 
-//search bar sprav tak ze das vyhladat podla mena to bude form odkazde to na url co to spracuje, to vypluje list a potom z toho listu spravis drop down meno,
-    //daj tam aj nejaku succes hlasku aby bolo jasne ze sa en dropdown upravil
+    @RequestMapping(value = "/markAsComplete/{bugId}")
+    public String markAsComplete(@PathVariable Long bugId){
+        Bug bugDB= bugService.findByBugId(bugId);
+        bugDB.setStatus("Completed");
+        bugService.completeBug(bugDB);
+        return "registrationcomplete";
+    }
+
+
 }

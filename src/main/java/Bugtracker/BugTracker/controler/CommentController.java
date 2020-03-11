@@ -38,7 +38,7 @@ public class CommentController {
     }
 
     @RequestMapping(value = "/add-comment-to-bug/{bugId}", method = RequestMethod.POST)
-    public String addComment (@Valid @ModelAttribute Comment comment, Bug bug, BindingResult bindingResult, @PathVariable Long bugId){
+    public String addComment (@Valid @ModelAttribute Comment comment, BindingResult bindingResult, @PathVariable Long bugId){
         if(bindingResult.hasErrors()){
             List<ObjectError> errors = bindingResult.getAllErrors();
             for(ObjectError error : errors) {
@@ -47,10 +47,6 @@ public class CommentController {
             return "error";
         }
         Bug bugFromDB = bugService.findByBugId(bugId);
-        bugFromDB.setStatus(bug.getStatus());
-        if(bug.getStatus().equalsIgnoreCase("completed")){
-            bugService.completeBug(bugFromDB);
-        }
 
         comment.setBug(bugFromDB);
         commentService.saveComment(comment);

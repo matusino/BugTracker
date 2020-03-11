@@ -28,22 +28,23 @@
                 </div>
                 <div class="form-group">
                     <lable>Short summary</lable>
-                    <input type="text" name="description" id="description" th:field="*{description}"
-                           required="true" autofocus="true" class="form-control input-lg">
+                        <textarea  class="form-control" th:field="*{description}" name="description" id="description" cols="1" rows="3" required="true"></textarea>
+                    <!--<input type="text" name="description" id="description" th:field="*{description}"-->
+                           <!--required="true" autofocus="true" class="form-control input-lg">-->
                 </div>
-                <div class="form-group">
-                    <select th:field="*{status}">
-                        <option th:value="'Unassigned'" th:text="Unassigned">Unassigned</option>
-                        <option th:value="'Assigned'" th:text="Assigned">Assigned</option>
-                        <option th:value="'Inprogress'" th:text="'In progress'">In progress</option>
-                        <option th:value="'Completed'" th:text="Completed">Completed</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select th:field="*{user}">
-                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName}">Unassigned</option>
-                    </select>
-                </div>
+                <!--<div class="form-group">-->
+                    <!--<select th:field="*{status}">-->
+                        <!--<option th:value="'Unassigned'" th:text="Unassigned">Unassigned</option>-->
+                        <!--<option th:value="'Assigned'" th:text="Assigned">Assigned</option>-->
+                        <!--<option th:value="'Inprogress'" th:text="'In progress'">In progress</option>-->
+                        <!--<option th:value="'Completed'" th:text="Completed">Completed</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<select th:field="*{user}">-->
+                        <!--<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName}">Unassigned</option>-->
+                    <!--</select>-->
+                <!--</div>-->
                 <button>SUBMIT</button>
             </fieldset>
         </form>

@@ -26,6 +26,10 @@ public class BugService {
         return bugRepository.save(bug);
     }
 
+    public Bug assignBug(Bug bug){
+        return bugRepository.save(bug);
+    }
+
     public Bug completeBug(Bug bug){
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
