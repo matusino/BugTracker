@@ -1,8 +1,10 @@
 package Bugtracker.BugTracker.model;
 
+import Bugtracker.BugTracker.configuration.Annotation.UniqueEmail;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -27,7 +29,8 @@ public class User {
     @NotEmpty(message = "please provide Last name")
     private String lastName;
 
-    @Column(name = "email_address")
+    @Column(name = "email_address", unique = true)
+    @UniqueEmail
     @NotEmpty(message = "please provide valid Email Address")
     private String email;
 

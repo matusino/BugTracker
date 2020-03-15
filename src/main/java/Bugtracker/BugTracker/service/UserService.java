@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class UserService {
     }
 
     public User findUserByEmail(String email){
-       return userRepository.findByEmail(email);
+       return userRepository.findByEmail(email).orElse(null);
     }
 
     public void deleteUser(Long id){
@@ -63,5 +64,14 @@ public class UserService {
 
     public List<User> findByProjectId(Long projectId){
         return userRepository.findByProjectList_Id(projectId);
+    }
+
+    @Transactional
+    public boolean isEmailAlreadyInUse(String email){
+        boolean emailInDb = true;
+        User userDB = userRepository.findByEmail(email).orElse(null);
+
+        if(userDB == null ) emailInDb = false;
+        return emailInDb;
     }
 }
