@@ -20,12 +20,10 @@ import java.util.List;
 @Controller
 public class AuthenticationController {
 
-    private final UserRepository userRepository;
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AuthenticationController(UserRepository userRepository, UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
+    public AuthenticationController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -61,7 +59,7 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/{userFirstName}/edit/password")
     public String changePassword(Model model, @PathVariable String userFirstName){
-        User user = userService.findUserByFirstName(userFirstName);
+        User user = userService.findUserByEmail(userFirstName);
 
         model.addAttribute("user", user);
 
@@ -77,7 +75,7 @@ public class AuthenticationController {
             }
             return "changepassword";
         }
-        User userDB = userService.findUserByFirstName(userFirstName);
+        User userDB = userService.findUserByEmail(userFirstName);
 
         String existingPassword = user.getPassword();
         String newPassword = user.getNewPassword();

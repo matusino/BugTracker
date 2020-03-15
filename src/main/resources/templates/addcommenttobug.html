@@ -20,7 +20,7 @@
             <h1>Summary of :bug</h1>
             <div class="row">
                 <div class="col-md-2">
-                    <a th:href="@{/{userFirstName}/assignBug/{bugId} (userFirstName= ${#authentication.name},bugId=${bug.id})}"
+                    <a th:href="@{/{userEmail}/assignBug/{bugId} (userEmail= ${#authentication.name},bugId=${bug.id})}"
                        class="btn btn-secondary">Assign To Me</a>
                 </div>
                 <div class="col-md-2">

@@ -66,9 +66,9 @@ public class BugController {
         bugService.saveBug(bug);
         return "registrationcomplete";
     }
-    @RequestMapping(value = "/{userFirstName}/assignBug/{bugId}")
-    public String assignBug (@PathVariable String userFirstName, @PathVariable Long bugId){
-        User userDB = userService.findUserByFirstName(userFirstName);
+    @RequestMapping(value = "/{userEmail}/assignBug/{bugId}")
+    public String assignBug (@PathVariable String userEmail, @PathVariable Long bugId){
+        User userDB = userService.findUserByEmail(userEmail);
         Bug bugDB = bugService.findByBugId(bugId);
 
         bugDB.setUser(userDB);

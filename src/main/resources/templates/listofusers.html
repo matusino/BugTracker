@@ -41,7 +41,7 @@
                     <td th:text="${user.firstName} +' '+ ${user.lastName}">Matus Sykora</td>
                     <td th:text="${user.birthDate}?: '-'">26-02-1993</td>
                     <td th:text="${user.phoneNumber} ?: '-'">+421980134876</td>
-                    <td th:text="${user.emailAddress}">matusino.sykora@ibm.com</td>
+                    <td th:text="${user.email}">matusino.sykora@ibm.com</td>
                     <td>
 				<span th:each="role,iterStat : ${user.roles}">
 					<span th:text="${role.role}"/><th:block th:if="${!iterStat.last}">,</th:block>

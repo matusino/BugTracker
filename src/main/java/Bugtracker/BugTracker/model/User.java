@@ -29,7 +29,7 @@ public class User {
 
     @Column(name = "email_address")
     @NotEmpty(message = "please provide valid Email Address")
-    private String emailAddress;
+    private String email;
 
     @Column(name = "birth_date")
     @Nullable
@@ -135,12 +135,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAddress(String birthDate) {
-        this.emailAddress = birthDate;
+    public void setEmail(String birthDate) {
+        this.email = birthDate;
     }
 
     public String getPassword() {
@@ -175,7 +175,7 @@ public class User {
         return Objects.equals(id, user.id) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
-                Objects.equals(emailAddress, user.emailAddress) &&
+                Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(roles, user.roles) &&
                 Objects.equals(bugs, user.bugs);
@@ -183,7 +183,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, emailAddress, password, roles, bugs);
+        return Objects.hash(id, firstName, lastName, email, password, roles, bugs);
     }
     //https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d
 }

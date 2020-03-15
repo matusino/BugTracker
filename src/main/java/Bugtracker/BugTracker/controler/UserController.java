@@ -50,17 +50,17 @@ public class UserController {
         return "redirect:/list-of-users";
     }
 
-    @RequestMapping(value = "/{userFirstName}/edit")
-    public String userProfile(Model model, @PathVariable String userFirstName){
-        User user = userService.findUserByFirstName(userFirstName);
+    @RequestMapping(value = "/{userEmail}/edit")
+    public String userProfile(Model model, @PathVariable String userEmail){
+        User user = userService.findUserByEmail(userEmail);
 
         model.addAttribute("user", user);
 
         return "userprofile";
     }
 
-    @RequestMapping(value = "/{userFirstName}/save")
-    public String doUpdateuser(@Valid @ModelAttribute User user, BindingResult bindingResult, @PathVariable String userFirstName ) throws ParseException {
+    @RequestMapping(value = "/{userEmail}/save")
+    public String doUpdateuser(@Valid @ModelAttribute User user, BindingResult bindingResult, @PathVariable String userEmail ) throws ParseException {
         if(bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
             for (ObjectError error : errors) {
@@ -68,17 +68,7 @@ public class UserController {
             }
             return "userprofile";
         }
-        User userDB = userService.findUserByFirstName(userFirstName);
-
-        String existingPassword = user.getPassword();
-        String newPassword = user.getNewPassword();
-        String dbPassword = userDB.getPassword();
-
-        if(bCryptPasswordEncoder.matches(existingPassword, dbPassword)){
-            userDB.setPassword(bCryptPasswordEncoder.encode(newPassword));
-        }else {
-            return "userprofile";
-        }
+        User userDB = userService.findUserByEmail(userEmail);
 
         userService.updateUser(user, userDB);
         userDB.setBirthDate(user.getBirthDate());
@@ -89,16 +79,16 @@ public class UserController {
 
     @RequestMapping(value = "/{userFirstName}/assign/{projectId}")
     public String assignProject(@PathVariable String userFirstName, @PathVariable Long projectId){
-       User userDB = userService.findUserByFirstName(userFirstName);
+       User userDB = userService.findUserByEmail(userFirstName);
        Project projectDB = projectService.findById(projectId);
        List<Project> listOfProjects = new ArrayList<>();
        listOfProjects.add(projectDB);
 
        userDB.setProjectList(listOfProjects);
 
-        userService.saveNewUser(userDB);
+       userService.saveNewUser(userDB);
 
-        return "registrationcomplete";
+       return "registrationcomplete";
     }
 
 }

@@ -17,7 +17,7 @@
             </div >
         </div>
         <div class="col-md-8" style="margin-top: 55px">
-            <form th:action="@{/{userFirstName}/save (userFirstName= ${#authentication.name})}" th:object="${user}" method="post">
+            <form th:action="@{@{|~/${#authentication.name}/save|}}" th:object="${user}" method="post">
                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p th:text="#{user.hasErrors}">Error Message</p>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-3">
-                        <input type="text" th:field="*{emailAddress}" th:value="${emailAddress}" readonly class="form-control-plaintext" id="staticEmail"
+                        <input type="text" th:field="*{email}" th:value="${email}" readonly class="form-control-plaintext" id="staticEmail"
                                value="email@example.com">
                     </div>
                     <div class="col-sm-3">
