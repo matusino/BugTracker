@@ -1,6 +1,7 @@
 package Bugtracker.BugTracker.model;
 
 import Bugtracker.BugTracker.configuration.Annotation.UniqueEmail;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
@@ -40,9 +41,11 @@ public class User {
     private Date birthDate;
 
     @OneToMany(mappedBy = "projectManager")
+    @JsonManagedReference
     private List<Project> projects;
 
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(name = "user_project",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id"))
@@ -61,12 +64,14 @@ public class User {
     private String newPassword;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Bug> bugs;
 
     public User() {

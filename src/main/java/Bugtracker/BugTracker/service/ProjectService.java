@@ -41,7 +41,7 @@ public class ProjectService {
 
     public List<User> findByProjectManager(){
 
-        Role role = roleRepository.findByRole("PROJECT_MANAGER");
+        Role role = roleRepository.findByRole("ROLE_PROJECT_MANAGER");
         Set<User> users = role.getUsers();
 
         return new ArrayList<>(users);

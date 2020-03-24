@@ -23,7 +23,7 @@
                 <div class="main-head">
                     <h1>Manage Projects, Track Bugs, Review tickets Online</h1>
                 </div>
-                <span th:text="${#authentication.getPrincipal()}"></span> <!-- No ".getUsername()"-->
+                <!--<span th:text="${#authentication.getPrincipal()}"></span>-->
 
             </div>
             <div class="row">
@@ -94,6 +94,13 @@
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <div th:replace="fragments/logout :: logout">
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

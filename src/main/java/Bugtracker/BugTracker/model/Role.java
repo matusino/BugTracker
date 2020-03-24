@@ -1,5 +1,7 @@
 package Bugtracker.BugTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -18,6 +20,7 @@ public class Role {
 
 
     @ManyToMany(mappedBy = "roles")
+    @JsonBackReference
     private Set<User> users = new HashSet<>();
 
     public Role() {

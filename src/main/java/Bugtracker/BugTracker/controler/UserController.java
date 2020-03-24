@@ -4,6 +4,8 @@ import Bugtracker.BugTracker.model.Project;
 import Bugtracker.BugTracker.model.User;
 import Bugtracker.BugTracker.service.ProjectService;
 import Bugtracker.BugTracker.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +39,13 @@ public class UserController {
 
         model.addAttribute("users", listOfUsers);
         return "listofusers";
+    }
+
+    //REST controller test
+    @RequestMapping(value = "/list-of-users/all")
+    public ResponseEntity listOfUsers1(){
+        List<User> listOfUsers = userService.listOfUsers();
+        return new ResponseEntity<>(listOfUsers, HttpStatus.OK);
     }
 
     @RequestMapping("/main")

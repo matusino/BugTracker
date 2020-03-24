@@ -11,20 +11,40 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row ">
         <div class="col-md-2">
             <div th:replace="fragments/header :: header">
             </div>
         </div>
         <div class="col-md-8" style="margin-top: 55px">
-            <h1>Summary of :bug</h1>
             <div class="row">
-                <div class="col-md-2">
-                    <a th:href="@{/{userEmail}/assignBug/{bugId} (userEmail= ${#authentication.name},bugId=${bug.id})}"
-                       class="btn btn-secondary">Assign To Me</a>
+                <div class="col-md">
+                    <h1 th:text="'Summary of: ' + ${bug.title}"></h1>
                 </div>
-                <div class="col-md-2">
-                    <a th:href="@{/markAsComplete/{bugId} (bugId=${bug.id})}" class="btn btn-secondary">Mark As
+                <div class="col-md">
+                    <h1 th:text="'Status: ' + ${bug.status}"></h1>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div th:if="${bug.status == 'Completed'}" class="col-md-2">
+                    <a th:href="@{/{userEmail}/assignBug/{bugId} (userEmail= ${#authentication.name},bugId=${bug.id})}"
+                       class="btn btn-secondary">Reopen Ticket</a>
+                </div>
+                <div th:unless="${bug.status == 'Completed'}" class="col-md-2">
+                    <div th:if="${bug.status == 'In Progress'}">
+                        <a th:href="@{/{userEmail}/assignBug/{bugId} (userEmail= ${#authentication.name},bugId=${bug.id})}"
+                           class="btn btn-secondary">Reassign To Me</a>
+                    </div>
+                    <div th:unless="${bug.status == 'In Progress'}">
+                        <a th:href="@{/{userEmail}/assignBug/{bugId} (userEmail= ${#authentication.name},bugId=${bug.id})}"
+                           class="btn btn-secondary">Assign To Me</a>
+                    </div>
+
+                </div>
+                <div th:if="${bug.status != 'Completed'}" class="col-md-2">
+                    <a th:href="@{/{userEmail}/markAsComplete/{bugId} (userEmail= ${#authentication.name},bugId=${bug.id})}" class="btn btn-secondary">Mark As
                         Complete</a>
                 </div>
             </div>

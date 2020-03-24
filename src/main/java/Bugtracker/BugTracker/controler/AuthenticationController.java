@@ -1,7 +1,6 @@
 package Bugtracker.BugTracker.controler;
 
 import Bugtracker.BugTracker.model.User;
-import Bugtracker.BugTracker.repository.UserRepository;
 import Bugtracker.BugTracker.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;

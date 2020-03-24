@@ -1,5 +1,7 @@
 package Bugtracker.BugTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
@@ -15,6 +17,7 @@ public class Comment {
     private Date dateOfSubmit;
 
     @ManyToOne
+    @JsonBackReference
     private Bug bug;
 
 
@@ -52,5 +55,5 @@ public class Comment {
     public void setBody(String body) {
         this.body = body;
     }
-    //history tlacitko tam kde su bugy
+
 }

@@ -1,5 +1,8 @@
 package Bugtracker.BugTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +26,17 @@ public class Project {
     private String backendLang;
 
     @ManyToOne
+    @JsonBackReference
     private User projectManager;
 
     private String databaseTechnology;
 
     @ManyToMany(mappedBy = "projectList")
+    @JsonBackReference
     private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "project")
+    @JsonManagedReference
     private List<Bug> bugs = new ArrayList<>();
 
     public Project() {

@@ -1,11 +1,15 @@
 package Bugtracker.BugTracker.controler;
 
 import Bugtracker.BugTracker.model.Bug;
+import Bugtracker.BugTracker.model.Comment;
 import Bugtracker.BugTracker.model.Project;
 import Bugtracker.BugTracker.model.User;
 import Bugtracker.BugTracker.service.BugService;
+import Bugtracker.BugTracker.service.CommentService;
 import Bugtracker.BugTracker.service.ProjectService;
 import Bugtracker.BugTracker.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,11 +27,13 @@ public class BugController {
     private final BugService bugService;
     private final UserService userService;
     private final ProjectService projectService;
+    private final CommentService commentService;
 
-    public BugController(BugService bugService, UserService userService, ProjectService projectService) {
+    public BugController(BugService bugService, UserService userService, ProjectService projectService, CommentService commentService) {
         this.bugService = bugService;
         this.userService = userService;
         this.projectService = projectService;
+        this.commentService = commentService;
     }
 
     @RequestMapping(value = "/add-new-bug/{projectId}")
@@ -52,10 +57,7 @@ public class BugController {
             }
             return "error";
         }
-//        User user = userService.findById(bug.getUser().getId());
-//        if(user == null){
-//            System.out.println("USER is NULL");
-//        }
+//     
         Project project = projectService.findById(projectId);
         if(project == null){
             System.out.println("PROJECT is NULL");
@@ -70,9 +72,13 @@ public class BugController {
     public String assignBug (@PathVariable String userEmail, @PathVariable Long bugId){
         User userDB = userService.findUserByEmail(userEmail);
         Bug bugDB = bugService.findByBugId(bugId);
+        Comment comment = new Comment();
 
         bugDB.setUser(userDB);
         bugDB.setStatus("In Progress");
+        comment.setBody("Status change: In Progress - Assigned to: " + userDB.getFirstName());
+        comment.setBug(bugDB);
+        commentService.saveComment(comment);
 
         bugService.assignBug(bugDB);
 
@@ -94,11 +100,28 @@ public class BugController {
         return "listofallbugs";
     }
 
-    @RequestMapping(value = "/markAsComplete/{bugId}")
-    public String markAsComplete(@PathVariable Long bugId){
+    //Rest controller test
+    @RequestMapping("/list-of-all-bugs/2")
+    public ResponseEntity listOfAllBugs2(Model model){
+        List<Bug> bugs = bugService.findAllBugs();
+        return new ResponseEntity<>(bugs, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/{userEmail}/markAsComplete/{bugId}")
+    public String markAsComplete(@PathVariable String userEmail, @PathVariable Long bugId){
         Bug bugDB= bugService.findByBugId(bugId);
+        User userDB= userService.findUserByEmail(userEmail);
+        Comment comment = new Comment();
+
         bugDB.setStatus("Completed");
         bugService.completeBug(bugDB);
+
+        comment.setBody("Completed by: "+ userDB.getFirstName());
+        comment.setBug(bugDB);
+        commentService.saveComment(comment);
+
+
         return "registrationcomplete";
     }
 

@@ -1,5 +1,8 @@
 package Bugtracker.BugTracker.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
@@ -25,12 +28,15 @@ public class Bug {
     private Date completion;//toto nejako pozret ako to updatnut tak ked sa to zavre
 
     @OneToMany(mappedBy = "bug")
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     @ManyToOne
+    @JsonBackReference
     private Project project;
 
     public Bug() {
