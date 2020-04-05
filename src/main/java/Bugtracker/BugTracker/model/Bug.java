@@ -2,6 +2,8 @@ package Bugtracker.BugTracker.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -33,6 +35,8 @@ public class Bug {
 
     @ManyToOne
     @JsonBackReference
+    @NotFound(
+            action = NotFoundAction.IGNORE)
     private User user;
 
     @ManyToOne

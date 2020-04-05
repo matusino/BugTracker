@@ -1,5 +1,6 @@
 package Bugtracker.BugTracker.controler;
 
+import Bugtracker.BugTracker.helper.PasswordChangeHelper;
 import Bugtracker.BugTracker.model.User;
 import Bugtracker.BugTracker.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -29,18 +29,23 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/")
     public String index(){
-        return "login";
+        return "authentication/login";
     }
 
     @RequestMapping(value = "/login")
     public String loginForm(){
-        return "login";
+        return "authentication/login";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registrationForm(Model model){
         model.addAttribute("user", new User());
-        return "registration";
+        return "authentication/registration";
+    }
+    @RequestMapping(value = "/edit/password", method = RequestMethod.GET)
+    public String changePassword(Model model){
+        model.addAttribute("passwordChangeHelper", new PasswordChangeHelper());
+        return "authentication/passwordchange";
     }
 
     @RequestMapping(value = "/doregistration", method = RequestMethod.POST)
@@ -50,46 +55,35 @@ public class AuthenticationController {
             for(ObjectError error : errors) {
                 System.out.println("This is the error: " +error);
             }
-            return "registration";
+            return "authentication/registration";
         }
         userService.saveUser(user);
-        return "registrationcomplete";
+        return "authentication/registrationcomplete";
     }
 
-    @RequestMapping(value = "/{userFirstName}/edit/password")
-    public String changePassword(Model model, @PathVariable String userFirstName){
-        User user = userService.findUserByEmail(userFirstName);
-
-        model.addAttribute("user", user);
-
-        return "changepassword";
-    }
-
-    @RequestMapping(value = "/{userFirstName}/save/password")
-    public String doChangePassword(@Valid @ModelAttribute User user, BindingResult bindingResult, @PathVariable String userFirstName ) throws ParseException {
+    @RequestMapping(value = "/{userFirstName}/save/password", method = RequestMethod.POST)
+    public String doChangePassword(@Valid @ModelAttribute PasswordChangeHelper passwordHelp, BindingResult bindingResult, @PathVariable String userFirstName ){
         if(bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
             for (ObjectError error : errors) {
                 System.out.println("This is the error: " + error);
             }
-            return "changepassword";
+            return "authentication/passwordchange";
         }
         User userDB = userService.findUserByEmail(userFirstName);
 
-        String existingPassword = user.getPassword();
-        String newPassword = user.getNewPassword();
+        String passwordCheck = passwordHelp.getOldPassword();
+        String newPassword = passwordHelp.getNewPassword();
         String dbPassword = userDB.getPassword();
 
-        if(bCryptPasswordEncoder.matches(existingPassword, dbPassword)){
+        if(bCryptPasswordEncoder.matches(passwordCheck, dbPassword)){
             userDB.setPassword(bCryptPasswordEncoder.encode(newPassword));
         }else {
-            return "changepassword";
+            return "authentication/incorectpassword";
         }
 
         userService.saveNewUser(userDB);
 
-        return "succespasswordchange";
+        return "authentication/succespasswordchange";
     }
-
-
 }

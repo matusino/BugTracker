@@ -2,6 +2,8 @@ package Bugtracker.BugTracker.model;
 
 import Bugtracker.BugTracker.configuration.Annotation.UniqueEmail;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
@@ -13,8 +15,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
+//@Table(name = "user",uniqueConstraints={@UniqueConstraint(columnNames={"email_address"})})
 @Entity
+@DynamicUpdate
 public class User {
 
     @Id
@@ -30,10 +33,10 @@ public class User {
     @NotEmpty(message = "please provide Last name")
     private String lastName;
 
-    @Column(name = "email_address", unique = true)
+    @Column(name = "email_address")
     @UniqueEmail
-    @NotEmpty(message = "please provide valid Email Address")
     private String email;
+
 
     @Column(name = "birth_date")
     @Nullable

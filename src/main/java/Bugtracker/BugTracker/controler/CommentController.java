@@ -34,7 +34,7 @@ public class CommentController {
 
         List<Comment> comments = commentService.listOfComments(bugId);
         model.addAttribute("comments", comments);
-        return "addcommenttobug";
+        return "bug/addcommenttobug";
     }
 
     @RequestMapping(value = "/add-comment-to-bug/{bugId}", method = RequestMethod.POST)

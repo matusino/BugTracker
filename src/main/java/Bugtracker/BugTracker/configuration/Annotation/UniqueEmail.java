@@ -17,7 +17,7 @@ public @interface UniqueEmail {
     public String message()default "There is already user with this email!";
 
 
-    //these two specific for validation and are just copy-pasted to make sure that this will work,
+    //these two are specific for validation and are just copy-pasted to make sure that this will work
     public Class<?>[] groups() default {};
 
     public Class<? extends Payload>[] payload() default{};

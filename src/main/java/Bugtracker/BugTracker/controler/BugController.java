@@ -45,7 +45,7 @@ public class BugController {
         model.addAttribute("project", project);
 
         model.addAttribute("bug",new Bug());
-        return "addnewbug";
+        return "bug/addnewbug";
     }
 
     @RequestMapping(value = "/dosave/{projectId}", method = RequestMethod.POST)
@@ -57,16 +57,15 @@ public class BugController {
             }
             return "error";
         }
-//     
+
         Project project = projectService.findById(projectId);
         if(project == null){
             System.out.println("PROJECT is NULL");
         }
         bug.setStatus("UNASSIGNED");
         bug.setProject(project);
-//        bug.setUser(user);
         bugService.saveBug(bug);
-        return "registrationcomplete";
+        return "redirect:/modify/project/{projectId}";
     }
     @RequestMapping(value = "/{userEmail}/assignBug/{bugId}")
     public String assignBug (@PathVariable String userEmail, @PathVariable Long bugId){
@@ -82,7 +81,7 @@ public class BugController {
 
         bugService.assignBug(bugDB);
 
-        return "registrationcomplete";
+        return "redirect:/addComment/{bugId}";
     }
     @RequestMapping(value = "/list-of-project-bugs/{projectId}")
     public String listOfProjectBugs(Model model, @PathVariable Long projectId){
@@ -91,13 +90,13 @@ public class BugController {
 
         model.addAttribute("project", project);
         model.addAttribute("bugs",bugs);
-        return "listofprojectspecificbug";
+        return "bug/listofprojectspecificbug";
     }
     @RequestMapping("/list-of-all-bugs")
     public String listOfAllBugs(Model model){
         List<Bug> bugs = bugService.findAllBugs();
         model.addAttribute("bugs", bugs);
-        return "listofallbugs";
+        return "bug/listofallbugs";
     }
 
     //Rest controller test
@@ -122,7 +121,7 @@ public class BugController {
         commentService.saveComment(comment);
 
 
-        return "registrationcomplete";
+        return "redirect:/addComment/{bugId}";
     }
 
 

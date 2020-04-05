@@ -1,5 +1,6 @@
 package Bugtracker.BugTracker.service;
 
+import Bugtracker.BugTracker.helper.UserUpdateHelper;
 import Bugtracker.BugTracker.model.Role;
 import Bugtracker.BugTracker.model.User;
 import Bugtracker.BugTracker.repository.RoleRepository;
@@ -46,17 +47,29 @@ public class UserService {
 
     public User saveUser(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByRole("PROJECT_MANAGER");
+        Role userRole = roleRepository.findByRole("ROLE_ADMIN");
         List<Role> listRoles = new ArrayList<>();
         listRoles.add(userRole);
         user.setRoles(listRoles);
         return userRepository.save(user);
     }
 
-    public void updateUser(User user, User userDB){
-        userDB.setFirstName(user.getFirstName());
-        userDB.setLastName(user.getLastName());
-        userDB.setPhoneNumber(user.getPhoneNumber());
+    public void updateUser(UserUpdateHelper user, User userDB){
+        if(user.getFirstName() == null){
+            userDB.setFirstName(userDB.getFirstName());
+        }else {
+            userDB.setFirstName(user.getFirstName());
+        }
+        if(user.getLastName() == null){
+            userDB.setLastName(userDB.getLastName());
+        }else {
+            userDB.setLastName(user.getLastName());
+        }
+        if(user.getLastName() == null){
+            userDB.setPhoneNumber(userDB.getPhoneNumber());
+        }else {
+            userDB.setPhoneNumber(user.getPhoneNumber());
+        }
     }
     public User saveNewUser(User user){
         return userRepository.save(user);

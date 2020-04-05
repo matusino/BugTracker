@@ -33,23 +33,23 @@ public class ProjectController {
 
         model.addAttribute("users", users);
         model.addAttribute("project", new Project());
-        return "addproject";
+        return "project/addproject";
     }
 
     @RequestMapping(value = "/admin/addproject", method = RequestMethod.POST)
     public String addProject(@Valid Project project, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "/admin/create-project";
+            return "redirect:/admin/create-project";
         }
         projectService.createNewProject(project);
-        return "registrationcomplete";
+        return "redirect:/listofprojects";
     }
 
     @RequestMapping(value = "/listofprojects")
     public String listOfProject(Model model){
         List<Project> projects = projectService.listOfProjects();
         model.addAttribute("projects", projects);
-        return "listofprojects";
+        return "project/listofprojects";
     }
 
     @RequestMapping(value = "/modify/project/{projectId}")
@@ -74,6 +74,6 @@ public class ProjectController {
 
        projectService.createNewProject(projectDB);
 
-       return "registrationcomplete";
+       return "redirect:/modify/project/{projectId}";
     }
 }

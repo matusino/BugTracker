@@ -1,5 +1,6 @@
 package Bugtracker.BugTracker.controler;
 
+import Bugtracker.BugTracker.helper.UserUpdateHelper;
 import Bugtracker.BugTracker.model.Project;
 import Bugtracker.BugTracker.model.User;
 import Bugtracker.BugTracker.service.ProjectService;
@@ -14,6 +15,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -38,7 +40,7 @@ public class UserController {
         List<User> listOfUsers = userService.listOfUsers();
 
         model.addAttribute("users", listOfUsers);
-        return "listofusers";
+        return "user/listofusers";
     }
 
     //REST controller test
@@ -59,31 +61,40 @@ public class UserController {
         return "redirect:/list-of-users";
     }
 
-    @RequestMapping(value = "/{userEmail}/edit")
+    @RequestMapping(value = "/{userEmail}/edit", method = RequestMethod.GET)
     public String userProfile(Model model, @PathVariable String userEmail){
         User user = userService.findUserByEmail(userEmail);
 
+        model.addAttribute("userUpdate", new UserUpdateHelper());
         model.addAttribute("user", user);
 
-        return "userprofile";
+        return "user/userprofile";
     }
 
-    @RequestMapping(value = "/{userEmail}/save")
-    public String doUpdateuser(@Valid @ModelAttribute User user, BindingResult bindingResult, @PathVariable String userEmail ) throws ParseException {
-        if(bindingResult.hasErrors()) {
+    @RequestMapping(value = "/{userEmail}/save", method = RequestMethod.POST)
+    public String doUpdateuser(@Valid @ModelAttribute UserUpdateHelper user, BindingResult bindingResult, @PathVariable String userEmail )  {
+        if(bindingResult.hasErrors()){
             List<ObjectError> errors = bindingResult.getAllErrors();
-            for (ObjectError error : errors) {
-                System.out.println("This is the error: " + error);
+            for(ObjectError error : errors) {
+                System.out.println("This is the error: " +error);
             }
-            return "userprofile";
+            return "redirect:/{userEmail}/edit";
         }
-        User userDB = userService.findUserByEmail(userEmail);
 
-        userService.updateUser(user, userDB);
+        User userDB = userService.findUserByEmail(userEmail);
+        if(userDB.getPhoneNumber()!= null){
+            userDB.setPhoneNumber(userDB.getPhoneNumber());
+        }else {
+            if(user.getPhoneNumber().isEmpty()){
+                userDB.setPhoneNumber(null);
+            }else if(!user.getPhoneNumber().isEmpty()){
+                userDB.setPhoneNumber(user.getPhoneNumber());
+            }
+        }
         userDB.setBirthDate(user.getBirthDate());
         userService.saveNewUser(userDB);
 
-        return "registrationcomplete";
+        return "redirect:/{userEmail}/edit";
     }
 
     @RequestMapping(value = "/{userFirstName}/assign/{projectId}")
@@ -97,7 +108,7 @@ public class UserController {
 
        userService.saveNewUser(userDB);
 
-       return "registrationcomplete";
+       return "redirect:/modify/project/{projectId}";
     }
 
 }
